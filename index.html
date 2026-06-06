@@ -154,6 +154,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy-deep);color:var(--wh
 .copy-toast.show{opacity:1;}
 @media(max-width:600px){.hub-hero{padding:40px 4% 36px;}.hub-body{padding:24px 4% 60px;}.seg-form,.calc-grid,.msg-grid{flex-direction:column;grid-template-columns:1fr;}.obj-grid{grid-template-columns:1fr;}}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 <header class="hub-header">
@@ -316,9 +317,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy-deep);color:var(--wh
       <div class="msg-output" id="reporte-output">
         <div class="msg-text" id="reporte-text"></div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn-calc" onclick="descargarReportePDF()" style="display:flex;align-items:center;gap:8px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Descargar PDF
+          </button>
           <button class="btn-copy" onclick="copiarReporte()">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-            Copiar reporte
+            Copiar texto
           </button>
           <button class="btn-copy" onclick="limpiarReporte()" style="border-color:rgba(255,100,100,0.3);color:#ff9090;">
             Nuevo reporte
@@ -727,6 +732,164 @@ function generarReporte(){
   document.getElementById('reporte-output').style.display = 'block';
 }
 function copiarReporte(){copyText(document.getElementById('reporte-text').textContent);}
+
+function descargarReportePDF(){
+  if(typeof window.jspdf==='undefined'){alert('No se pudo cargar el generador de PDF. Verifica tu conexion a internet e intenta de nuevo.');return;}
+  var jsPDF=window.jspdf.jsPDF;
+  var doc=new jsPDF({unit:'pt',format:'a4'});
+
+  var nombre   = document.getElementById('r-nombre').value.trim()    || 'Vendedor';
+  var fecha    = document.getElementById('r-fecha').value.trim()     || new Date().toLocaleDateString('es-BO');
+  var llamadas = parseInt(document.getElementById('r-llamadas').value)||0;
+  var visitas  = parseInt(document.getElementById('r-visitas').value) ||0;
+  var props    = parseInt(document.getElementById('r-propuestas').value)||0;
+  var ventas   = parseInt(document.getElementById('r-ventas').value)  ||0;
+  var monto    = document.getElementById('r-monto').value            || '0';
+  var prospectos = document.getElementById('r-prospectos').value.trim();
+  var logro    = document.getElementById('r-logro').value.trim();
+  var obstaculo= document.getElementById('r-obstaculo').value.trim();
+  var montoFmt = 'Bs. ' + parseFloat(monto).toLocaleString('es-BO');
+
+  var NAVY=[27,42,107], NAVYDEEP=[15,26,66], GOLD=[245,166,35], GRAY=[107,114,128], DARK=[40,40,40], LIGHT=[244,246,251], LINE=[225,228,235];
+  var W=595, M=48;
+
+  // ===== HEADER BAND =====
+  doc.setFillColor(NAVYDEEP[0],NAVYDEEP[1],NAVYDEEP[2]);
+  doc.rect(0,0,W,96,'F');
+  doc.setFillColor(GOLD[0],GOLD[1],GOLD[2]);
+  doc.rect(0,96,W,3,'F');
+
+  doc.setTextColor(255,255,255);
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(18);
+  doc.text('REPORTE DE ACTIVIDAD DIARIA',M,46);
+  doc.setTextColor(GOLD[0],GOLD[1],GOLD[2]);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(10);
+  doc.text(nombre.toUpperCase(),M,68);
+
+  // fecha right
+  doc.setTextColor(255,255,255);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(10);
+  doc.text(fecha,W-M,68,{align:'right'});
+
+  // ===== METRICS CARDS =====
+  var cy=130;
+  doc.setTextColor(NAVY[0],NAVY[1],NAVY[2]);
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(11);
+  doc.text('ACTIVIDAD DEL DIA',M,cy);
+
+  var metrics=[['Contactos',llamadas],['Visitas',visitas],['Propuestas',props],['Ventas',ventas]];
+  var cardY=cy+14, cardW=(W-2*M-3*12)/4, cardH=64;
+  for(var i=0;i<metrics.length;i++){
+    var cx=M+i*(cardW+12);
+    doc.setFillColor(LIGHT[0],LIGHT[1],LIGHT[2]);
+    doc.roundedRect(cx,cardY,cardW,cardH,6,6,'F');
+    doc.setDrawColor(GOLD[0],GOLD[1],GOLD[2]);
+    doc.setLineWidth(2);
+    doc.line(cx,cardY+8,cx,cardY+cardH-8);
+    doc.setTextColor(NAVY[0],NAVY[1],NAVY[2]);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(22);
+    doc.text(String(metrics[i][1]),cx+cardW/2,cardY+34,{align:'center'});
+    doc.setTextColor(GRAY[0],GRAY[1],GRAY[2]);
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(8);
+    doc.text(metrics[i][0].toUpperCase(),cx+cardW/2,cardY+50,{align:'center'});
+  }
+
+  // ===== MONTO VENDIDO =====
+  var my=cardY+cardH+18;
+  doc.setFillColor(NAVY[0],NAVY[1],NAVY[2]);
+  doc.roundedRect(M,my,W-2*M,46,6,6,'F');
+  doc.setTextColor(255,255,255);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(9);
+  doc.text('MONTO VENDIDO HOY',M+18,my+19);
+  doc.setTextColor(GOLD[0],GOLD[1],GOLD[2]);
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(20);
+  doc.text(montoFmt,W-M-18,my+30,{align:'right'});
+
+  // ===== EMBUDO DE VENTAS (funnel chart) =====
+  var fy=my+74;
+  doc.setTextColor(NAVY[0],NAVY[1],NAVY[2]);
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(11);
+  doc.text('EMBUDO DEL DIA',M,fy);
+
+  var funnel=[['Contactos',llamadas],['Visitas',visitas],['Propuestas',props],['Ventas',ventas]];
+  var maxVal=Math.max(llamadas,visitas,props,ventas,1);
+  var barAreaX=M+110, barMaxW=W-M-barAreaX-60;
+  var barH=26, gap=12, by=fy+22;
+
+  for(var j=0;j<funnel.length;j++){
+    var label=funnel[j][0], val=funnel[j][1];
+    var w=(val/maxVal)*barMaxW;
+    if(w<2 && val>0) w=2;
+    var rowY=by+j*(barH+gap);
+    // label
+    doc.setTextColor(DARK[0],DARK[1],DARK[2]);
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(10);
+    doc.text(label,M,rowY+barH/2+3);
+    // track
+    doc.setFillColor(LIGHT[0],LIGHT[1],LIGHT[2]);
+    doc.roundedRect(barAreaX,rowY,barMaxW,barH,4,4,'F');
+    // bar (gradient feel: navy for first, gold for last)
+    if(w>0){
+      var col = (j===funnel.length-1)?GOLD:NAVY;
+      doc.setFillColor(col[0],col[1],col[2]);
+      doc.roundedRect(barAreaX,rowY,w,barH,4,4,'F');
+    }
+    // value
+    doc.setTextColor(DARK[0],DARK[1],DARK[2]);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(11);
+    doc.text(String(val),barAreaX+barMaxW+12,rowY+barH/2+4);
+  }
+
+  var sy=by+funnel.length*(barH+gap)+20;
+
+  // ===== SECTIONS =====
+  function section(title,body){
+    if(!body)return;
+    doc.setTextColor(NAVY[0],NAVY[1],NAVY[2]);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(11);
+    doc.text(title,M,sy);
+    sy+=8;
+    doc.setDrawColor(GOLD[0],GOLD[1],GOLD[2]);
+    doc.setLineWidth(1.5);
+    doc.line(M,sy,M+40,sy);
+    sy+=16;
+    doc.setTextColor(DARK[0],DARK[1],DARK[2]);
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(11);
+    var lines=doc.splitTextToSize(body,W-2*M);
+    doc.text(lines,M,sy);
+    sy+=lines.length*15+18;
+  }
+  section('PROSPECTOS CALIENTES PARA MANIANA',prospectos);
+  section('LOGRO DESTACADO',logro);
+  section('OBSTACULO / APRENDIZAJE',obstaculo);
+
+  // ===== FOOTER =====
+  doc.setDrawColor(LINE[0],LINE[1],LINE[2]);
+  doc.setLineWidth(1);
+  doc.line(M,805,W-M,805);
+  doc.setTextColor(GRAY[0],GRAY[1],GRAY[2]);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(8);
+  doc.text('Reporte generado el '+new Date().toLocaleDateString('es-BO'),M,820);
+
+  var safeName=nombre.replace(/[^a-zA-Z0-9]/g,'_');
+  var safeFecha=fecha.replace(/[^a-zA-Z0-9]/g,'_');
+  doc.save('Reporte_'+safeName+'_'+safeFecha+'.pdf');
+}
+
 function limpiarReporte(){
   ['r-nombre','r-fecha','r-llamadas','r-visitas','r-propuestas','r-ventas','r-monto','r-prospectos','r-logro','r-obstaculo'].forEach(function(id){
     document.getElementById(id).value='';
