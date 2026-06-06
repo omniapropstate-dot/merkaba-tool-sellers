@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kit del Vendedor — Merkaba Consulting Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1B2A6B;--navy-deep:#0f1a42;--gold:#F5A623;--gold-light:#f7b94a;--gold-dim:rgba(245,166,35,0.15);--gold-dim2:rgba(245,166,35,0.08);--white:#FFFFFF;--text-light:rgba(255,255,255,0.7);--text-lighter:rgba(255,255,255,0.4);--card-bg:rgba(255,255,255,0.04);--card-border:rgba(255,255,255,0.08);}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy-deep);color:var(--white);overflow-x:hidden;}
+.hub-header{background:rgba(15,26,66,0.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(245,166,35,0.2);padding:18px 5%;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
+.logo-wrap{display:flex;align-items:center;gap:14px;}
+.logo-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;letter-spacing:0.05em;line-height:1.2;}
+.logo-sub{display:block;font-family:'DM Sans',sans-serif;font-size:0.52rem;font-weight:300;letter-spacing:0.22em;color:var(--gold);text-transform:uppercase;}
+.header-badge{background:var(--gold-dim);border:1px solid rgba(245,166,35,0.3);color:var(--gold);padding:6px 16px;border-radius:20px;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;}
+.hub-hero{padding:60px 5% 50px;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--navy-deep) 0%,#0d1635 100%);border-bottom:1px solid var(--card-border);}
+.hub-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 80% 50%,rgba(36,53,128,0.5) 0%,transparent 70%);}
+.hub-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);background-size:50px 50px;}
+.hub-hero-content{position:relative;z-index:2;max-width:700px;}
+.hub-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);font-weight:400;margin-bottom:20px;}
+.hub-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--gold);}
+.hub-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4.5vw,3.2rem);font-weight:300;line-height:1.15;margin-bottom:16px;}
+.hub-title em{font-style:italic;color:var(--gold);}
+.hub-desc{color:var(--text-light);font-size:0.97rem;line-height:1.7;max-width:560px;margin-bottom:32px;}
+.hub-stats{display:flex;gap:32px;flex-wrap:wrap;}
+.hub-stat{border-left:2px solid var(--gold);padding-left:14px;}
+.hub-stat-num{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gold);line-height:1;}
+.hub-stat-label{font-size:0.72rem;color:var(--text-lighter);text-transform:uppercase;letter-spacing:0.1em;margin-top:2px;}
+.section-nav{background:rgba(15,26,66,0.6);border-bottom:1px solid var(--card-border);padding:0 5%;display:flex;overflow-x:auto;scrollbar-width:none;}
+.section-nav::-webkit-scrollbar{display:none;}
+.nav-tab{padding:16px 22px;font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-lighter);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.3s;white-space:nowrap;font-weight:500;background:none;border-top:none;border-left:none;border-right:none;}
+.nav-tab:hover{color:var(--white);border-bottom-color:rgba(245,166,35,0.4);}
+.nav-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.hub-body{padding:40px 5% 80px;}
+.hub-section{display:none;}
+.hub-section.active{display:block;animation:fadeIn 0.4s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.section-title-row{display:flex;align-items:center;gap:14px;margin-bottom:10px;}
+.section-icon{width:42px;height:42px;background:var(--gold-dim);border:1px solid rgba(245,166,35,0.3);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.section-icon svg{width:20px;height:20px;stroke:var(--gold);}
+.section-heading{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:400;}
+.section-sub{color:var(--text-light);font-size:0.88rem;line-height:1.6;margin-bottom:32px;max-width:600px;}
+.tool-area{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;overflow:hidden;margin-bottom:28px;}
+.tool-header{padding:18px 24px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background 0.2s;}
+.tool-header:hover{background:rgba(255,255,255,0.03);}
+.tool-header-left{display:flex;align-items:center;gap:14px;}
+.tool-num{width:32px;height:32px;background:var(--gold-dim);border:1px solid rgba(245,166,35,0.4);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--gold);flex-shrink:0;}
+.tool-name{font-size:0.95rem;font-weight:500;}
+.tool-desc-short{font-size:0.78rem;color:var(--text-lighter);margin-top:2px;}
+.tool-toggle{width:28px;height:28px;background:rgba(255,255,255,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform 0.3s;flex-shrink:0;}
+.tool-toggle svg{width:14px;height:14px;stroke:var(--text-light);}
+.tool-toggle.open{transform:rotate(180deg);}
+.tool-body{display:none;padding:28px 24px;border-top:1px solid var(--card-border);background:rgba(0,0,0,0.15);}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px;}
+.field-group{display:flex;flex-direction:column;gap:6px;}
+.field-label{font-size:0.78rem;color:var(--text-lighter);text-transform:uppercase;letter-spacing:0.1em;}
+.field-input{background:rgba(255,255,255,0.06);border:1px solid var(--card-border);border-radius:8px;padding:12px 16px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:1rem;outline:none;transition:border-color 0.2s;width:100%;}
+.field-input:focus{border-color:rgba(245,166,35,0.5);}
+.field-input::placeholder{color:var(--text-lighter);}
+.btn-calc{background:var(--gold);color:var(--navy-deep);border:none;padding:14px 32px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:500;cursor:pointer;transition:all 0.2s;text-transform:uppercase;}
+.btn-calc:hover{background:var(--gold-light);}
+.btn-copy{background:transparent;border:1px solid rgba(245,166,35,0.4);color:var(--gold);padding:10px 20px;border-radius:8px;font-size:0.8rem;font-weight:500;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:8px;}
+.btn-copy:hover{background:var(--gold-dim);}
+.btn-copy svg{width:14px;height:14px;stroke:var(--gold);}
+.result-box{background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.25);border-radius:10px;padding:20px 24px;margin-top:20px;}
+.result-box.hidden{display:none;}
+.result-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:0.9rem;}
+.result-row:last-child{border-bottom:none;}
+.result-row.highlight{color:var(--gold);font-weight:500;font-size:1rem;}
+.result-label{color:var(--text-light);}
+.result-val{font-weight:500;}
+.result-alert{margin-top:14px;padding:12px 16px;border-radius:8px;font-size:0.83rem;font-weight:500;}
+.result-alert.danger{background:rgba(220,50,50,0.15);border:1px solid rgba(220,50,50,0.3);color:#ff7070;}
+.result-alert.ok{background:rgba(50,200,100,0.1);border:1px solid rgba(50,200,100,0.25);color:#5eca88;}
+.obj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-bottom:20px;}
+.obj-btn{background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:12px 16px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.86rem;cursor:pointer;text-align:left;transition:all 0.25s;display:flex;align-items:center;gap:10px;}
+.obj-btn:hover,.obj-btn.selected{background:var(--gold-dim);border-color:rgba(245,166,35,0.4);color:var(--gold);}
+.obj-btn-icon{width:28px;height:28px;background:rgba(255,255,255,0.06);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;}
+.respuestas-box{background:rgba(0,0,0,0.2);border:1px solid rgba(245,166,35,0.2);border-radius:10px;padding:20px;margin-top:6px;}
+.respuestas-box.hidden{display:none;}
+.resp-title{font-size:0.75rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--gold);margin-bottom:16px;font-weight:500;}
+.resp-item{background:rgba(255,255,255,0.04);border-radius:8px;padding:14px 48px 14px 16px;margin-bottom:10px;border-left:3px solid var(--gold);font-size:0.88rem;line-height:1.6;color:var(--text-light);cursor:pointer;transition:background 0.2s;position:relative;}
+.resp-item:hover{background:rgba(255,255,255,0.07);}
+.resp-item .copy-hint{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:0.7rem;color:var(--gold);opacity:0;transition:opacity 0.2s;text-transform:uppercase;letter-spacing:0.1em;white-space:nowrap;}
+.resp-item:hover .copy-hint{opacity:1;}
+.seg-resumen{display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap;}
+.seg-stat{background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:10px 16px;text-align:center;flex:1;min-width:70px;}
+.seg-stat-num{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--gold);}
+.seg-stat-lbl{font-size:0.68rem;color:var(--text-lighter);text-transform:uppercase;letter-spacing:0.1em;}
+.seg-form{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+.seg-input{flex:1;min-width:150px;background:rgba(255,255,255,0.06);border:1px solid var(--card-border);border-radius:8px;padding:11px 14px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.88rem;outline:none;}
+.seg-input:focus{border-color:rgba(245,166,35,0.5);}
+.seg-input::placeholder{color:var(--text-lighter);}
+.seg-select{background:rgba(255,255,255,0.06);border:1px solid var(--card-border);border-radius:8px;padding:11px 14px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.88rem;outline:none;cursor:pointer;}
+.seg-select option{background:var(--navy-deep);}
+.btn-add{background:var(--gold);color:var(--navy-deep);border:none;border-radius:8px;padding:11px 20px;font-weight:500;font-size:0.88rem;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;}
+.clientes-lista{display:flex;flex-direction:column;gap:8px;}
+.cliente-item{background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px;}
+.cliente-item.llamado{opacity:0.5;}
+.cliente-item.llamado .cliente-nombre{text-decoration:line-through;}
+.estado-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.dot-pendiente{background:#F5A623;}.dot-llamado{background:#5eca88;}.dot-urgente{background:#ff7070;}
+.cliente-nombre{font-size:0.9rem;flex:1;}
+.cliente-accion{font-size:0.78rem;color:var(--text-lighter);}
+.cliente-btns{display:flex;gap:6px;margin-left:auto;}
+.btn-small{padding:5px 12px;border-radius:6px;font-size:0.72rem;cursor:pointer;border:1px solid;font-family:'DM Sans',sans-serif;background:transparent;}
+.btn-done{border-color:rgba(94,202,136,0.4);color:#5eca88;}.btn-done:hover{background:rgba(94,202,136,0.15);}
+.btn-del{border-color:rgba(255,100,100,0.3);color:#ff7070;}.btn-del:hover{background:rgba(255,100,100,0.1);}
+.seg-empty{text-align:center;color:var(--text-lighter);padding:30px;font-size:0.85rem;}
+.msg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px;}
+.msg-output{background:rgba(0,0,0,0.2);border:1px solid rgba(245,166,35,0.2);border-radius:10px;padding:20px;margin-top:16px;display:none;}
+.msg-output.show{display:block;}
+.msg-text{font-size:0.9rem;line-height:1.7;color:var(--text-light);white-space:pre-line;margin-bottom:14px;}
+.prompts-grid{display:grid;gap:20px;}
+.prompt-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;overflow:hidden;}
+.prompt-card-header{padding:16px 20px;border-bottom:1px solid var(--card-border);display:flex;align-items:center;gap:12px;}
+.prompt-tag{background:var(--gold-dim);border:1px solid rgba(245,166,35,0.25);color:var(--gold);padding:3px 10px;border-radius:10px;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;margin-left:auto;flex-shrink:0;}
+.prompt-title-text{font-size:0.95rem;font-weight:500;}
+.prompt-subtitle{font-size:0.78rem;color:var(--text-lighter);margin-top:2px;}
+.prompt-body{padding:20px;}
+.prompt-vars{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.prompt-var{background:rgba(255,255,255,0.06);border-radius:6px;padding:4px 10px;font-size:0.72rem;color:var(--text-light);border:1px solid var(--card-border);}
+.prompt-var span{color:var(--gold);}
+.prompt-textarea{background:rgba(0,0,0,0.25);border:1px solid rgba(245,166,35,0.15);border-radius:8px;padding:14px 16px;color:var(--text-light);font-family:'DM Sans',sans-serif;font-size:0.83rem;line-height:1.6;width:100%;resize:vertical;outline:none;margin-bottom:10px;}
+.guia-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;overflow:hidden;margin-bottom:20px;}
+.guia-header{padding:18px 24px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
+.guia-header:hover{background:rgba(255,255,255,0.02);}
+.guia-title{font-size:0.95rem;font-weight:500;display:flex;align-items:center;gap:12px;}
+.guia-body{display:none;padding:24px;border-top:1px solid var(--card-border);}
+.guia-item{padding:14px 0;border-bottom:1px solid var(--card-border);display:flex;align-items:flex-start;gap:14px;font-size:0.88rem;line-height:1.6;color:var(--text-light);}
+.guia-item:last-child{border-bottom:none;}
+.guia-num{width:26px;height:26px;min-width:26px;background:var(--gold-dim);border:1px solid rgba(245,166,35,0.3);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;color:var(--gold);font-weight:600;margin-top:1px;}
+.guia-item-title{font-weight:500;color:var(--white);margin-bottom:3px;}
+.btn-print{background:transparent;border:1px solid rgba(245,166,35,0.4);color:var(--gold);padding:10px 20px;border-radius:8px;font-size:0.8rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:8px;margin-top:18px;}
+.btn-print:hover{background:var(--gold-dim);}
+.excel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+.excel-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:24px;transition:border-color 0.3s;}
+.excel-card:hover{border-color:rgba(245,166,35,0.3);}
+.excel-icon{width:48px;height:48px;background:rgba(34,139,34,0.15);border:1px solid rgba(34,139,34,0.3);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:1.4rem;}
+.excel-name{font-size:1rem;font-weight:500;margin-bottom:6px;}
+.excel-desc{font-size:0.82rem;color:var(--text-lighter);line-height:1.6;margin-bottom:16px;}
+.excel-features{margin-bottom:18px;}
+.excel-feat{font-size:0.78rem;color:var(--text-light);padding:4px 0;display:flex;align-items:center;gap:8px;}
+.excel-feat::before{content:"\2713";color:var(--gold);font-weight:600;}
+.btn-excel{background:var(--gold);color:var(--navy-deep);border:none;border-radius:8px;padding:12px 20px;font-weight:500;font-size:0.82rem;cursor:pointer;width:100%;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;}
+.btn-excel:hover{background:var(--gold-light);}
+.hub-footer{background:rgba(10,15,35,0.8);border-top:1px solid var(--card-border);padding:24px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.footer-text{font-size:0.75rem;color:var(--text-lighter);}
+.footer-gold{color:var(--gold);}
+.copy-toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--navy-deep);padding:10px 24px;border-radius:20px;font-size:0.82rem;font-weight:500;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999;}
+.copy-toast.show{opacity:1;}
+@media(max-width:600px){.hub-hero{padding:40px 4% 36px;}.hub-body{padding:24px 4% 60px;}.seg-form,.calc-grid,.msg-grid{flex-direction:column;grid-template-columns:1fr;}.obj-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header class="hub-header">
+  <div class="logo-wrap">
+    <svg width="38" height="38" viewBox="0 0 80 80" fill="none">
+      <polygon points="40,8 68,56 12,56" fill="none" stroke="#F5A623" stroke-width="2"/>
+      <polygon points="40,72 12,24 68,24" fill="none" stroke="#F5A623" stroke-width="1.5"/>
+      <circle cx="40" cy="40" r="34" fill="none" stroke="#F5A623" stroke-width="0.8" stroke-dasharray="3 3"/>
+    </svg>
+    <div class="logo-text">Merkaba<span class="logo-sub">Consulting Group</span></div>
+  </div>
+  <div class="header-badge">Kit del Vendedor</div>
+</header>
+
+<section class="hub-hero">
+  <div class="hub-hero-grid"></div>
+  <div class="hub-hero-content">
+    <div class="hub-eyebrow">Herramientas universales de venta</div>
+    <h1 class="hub-title">Todo lo que un vendedor<br>necesita, en <em>un solo lugar</em></h1>
+    <p class="hub-desc">Herramientas interactivas, prompts de IA listos para copiar, guias de ventas y plantillas Excel. Sin importar tu rubro, estas herramientas funcionan para ti.</p>
+    <div class="hub-stats">
+      <div class="hub-stat"><div class="hub-stat-num">4</div><div class="hub-stat-label">Herramientas</div></div>
+      <div class="hub-stat"><div class="hub-stat-num">6</div><div class="hub-stat-label">Prompts IA</div></div>
+      <div class="hub-stat"><div class="hub-stat-num">4</div><div class="hub-stat-label">Guias</div></div>
+      <div class="hub-stat"><div class="hub-stat-num">3</div><div class="hub-stat-label">Excels</div></div>
+    </div>
+  </div>
+</section>
+
+<nav class="section-nav">
+  <button class="nav-tab active" onclick="showSection('herramientas',this)">&#x1F5A5; Herramientas</button>
+  <button class="nav-tab" onclick="showSection('prompts',this)">&#x1F916; Prompts IA</button>
+  <button class="nav-tab" onclick="showSection('guias',this)">&#x1F4C4; Guias</button>
+  <button class="nav-tab" onclick="showSection('excels',this)">&#x1F4CA; Excels</button>
+</nav>
+
+<main class="hub-body">
+<section id="sec-herramientas" class="hub-section active">
+  <div class="section-title-row">
+    <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+    <h2 class="section-heading">Herramientas Interactivas</h2>
+  </div>
+  <p class="section-sub">Usalas directamente aqui. Sin internet adicional, sin registro, sin costo.</p>
+
+  <!-- T1: CALCULADORA -->
+  <div class="tool-area">
+    <div class="tool-header" onclick="toggleTool('t1')">
+      <div class="tool-header-left">
+        <div class="tool-num">1</div>
+        <div><div class="tool-name">Calculadora de Precio y Descuento</div><div class="tool-desc-short">Cuanto puedes bajar sin perder ganancia</div></div>
+      </div>
+      <div class="tool-toggle" id="toggle-t1"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="tool-body" id="body-t1">
+      <div class="calc-grid">
+        <div class="field-group"><label class="field-label">Precio de lista (Bs.)</label><input class="field-input" id="c1-precio" type="number" placeholder="Ej: 1000" oninput="calcDescuento()"></div>
+        <div class="field-group"><label class="field-label">Tu costo real (Bs.)</label><input class="field-input" id="c1-costo" type="number" placeholder="Ej: 600" oninput="calcDescuento()"></div>
+        <div class="field-group"><label class="field-label">Descuento ofrecido (%)</label><input class="field-input" id="c1-descuento" type="number" placeholder="Ej: 15" min="0" max="99" oninput="calcDescuento()"></div>
+      </div>
+      <div class="result-box hidden" id="c1-result">
+        <div class="result-row"><span class="result-label">Precio con descuento</span><span class="result-val" id="c1-r1">-</span></div>
+        <div class="result-row"><span class="result-label">Ganancia en esta venta</span><span class="result-val" id="c1-r2">-</span></div>
+        <div class="result-row highlight"><span class="result-label">Margen de ganancia real</span><span class="result-val" id="c1-r3">-</span></div>
+        <div class="result-row"><span class="result-label">Descuento maximo posible (margen 10%)</span><span class="result-val" id="c1-r4">-</span></div>
+        <div id="c1-alert" class="result-alert ok"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- T2: OBJECIONES -->
+  <div class="tool-area">
+    <div class="tool-header" onclick="toggleTool('t2')">
+      <div class="tool-header-left">
+        <div class="tool-num">2</div>
+        <div><div class="tool-name">Manejador de Objeciones</div><div class="tool-desc-short">Respuestas listas para las excusas mas comunes &mdash; haz clic para copiar</div></div>
+      </div>
+      <div class="tool-toggle" id="toggle-t2"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="tool-body" id="body-t2">
+      <p style="font-size:0.85rem;color:var(--text-lighter);margin-bottom:16px;">Selecciona la objecion del cliente y haz clic en la respuesta para copiarla:</p>
+      <div class="obj-grid">
+        <button class="obj-btn" onclick="showObjeciones('precio',this)"><span class="obj-btn-icon">&#x1F4B0;</span> "Esta muy caro"</button>
+        <button class="obj-btn" onclick="showObjeciones('pensar',this)"><span class="obj-btn-icon">&#x1F914;</span> "Lo voy a pensar"</button>
+        <button class="obj-btn" onclick="showObjeciones('proveedor',this)"><span class="obj-btn-icon">&#x1F91D;</span> "Ya tengo proveedor"</button>
+        <button class="obj-btn" onclick="showObjeciones('momento',this)"><span class="obj-btn-icon">&#x1F4C5;</span> "No es el momento"</button>
+        <button class="obj-btn" onclick="showObjeciones('consultar',this)"><span class="obj-btn-icon">&#x1F465;</span> "Debo consultarlo"</button>
+        <button class="obj-btn" onclick="showObjeciones('noconozco',this)"><span class="obj-btn-icon">&#x2753;</span> "No te conozco / no confio"</button>
+        <button class="obj-btn" onclick="showObjeciones('nolouso',this)"><span class="obj-btn-icon">&#x1F645;</span> "No lo necesito"</button>
+        <button class="obj-btn" onclick="showObjeciones('mabarato',this)"><span class="obj-btn-icon">&#x1F3F7;</span> "Lo encontre mas barato"</button>
+        <button class="obj-btn" onclick="showObjeciones('noresultados',this)"><span class="obj-btn-icon">&#x1F4CA;</span> "Como se que funciona?"</button>
+        <button class="obj-btn" onclick="showObjeciones('ocupado',this)"><span class="obj-btn-icon">&#x23F0;</span> "Ahora estoy muy ocupado"</button>
+        <button class="obj-btn" onclick="showObjeciones('malo',this)"><span class="obj-btn-icon">&#x1F62C;</span> "Escuche cosas malas"</button>
+        <button class="obj-btn" onclick="showObjeciones('descuento',this)"><span class="obj-btn-icon">&#x1F381;</span> "Me das un descuento?"</button>
+      </div>
+      <div class="respuestas-box hidden" id="respuestas-box">
+        <div class="resp-title" id="resp-title">Respuestas sugeridas &mdash; haz clic en cualquiera para copiar</div>
+        <div id="resp-items"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- T3: SEGUIMIENTO -->
+  <div class="tool-area">
+    <div class="tool-header" onclick="toggleTool('t3')">
+      <div class="tool-header-left">
+        <div class="tool-num">3</div>
+        <div><div class="tool-name">Seguimiento de Clientes del Dia</div><div class="tool-desc-short">A quien llame? Quien queda pendiente?</div></div>
+      </div>
+      <div class="tool-toggle" id="toggle-t3"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="tool-body" id="body-t3">
+      <div class="seg-resumen">
+        <div class="seg-stat"><div class="seg-stat-num" id="s-total">0</div><div class="seg-stat-lbl">Total</div></div>
+        <div class="seg-stat"><div class="seg-stat-num" id="s-pend" style="color:#F5A623">0</div><div class="seg-stat-lbl">Pendientes</div></div>
+        <div class="seg-stat"><div class="seg-stat-num" id="s-ok" style="color:#5eca88">0</div><div class="seg-stat-lbl">Contactados</div></div>
+        <div class="seg-stat"><div class="seg-stat-num" id="s-urg" style="color:#ff7070">0</div><div class="seg-stat-lbl">Urgentes</div></div>
+      </div>
+      <div class="seg-form">
+        <input class="seg-input" id="seg-nombre" placeholder="Nombre del cliente" style="flex:2">
+        <input class="seg-input" id="seg-accion" placeholder="Que hacer?" style="flex:2">
+        <select class="seg-select" id="seg-estado">
+          <option value="pendiente">Pendiente</option>
+          <option value="urgente">Urgente</option>
+          <option value="llamado">Contactado</option>
+        </select>
+        <button class="btn-add" onclick="agregarCliente()">+ Agregar</button>
+      </div>
+      <div class="clientes-lista" id="clientes-lista">
+        <div class="seg-empty">Agrega tus clientes del dia aqui</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- T4: MENSAJE -->
+  <div class="tool-area">
+    <div class="tool-header" onclick="toggleTool('t4')">
+      <div class="tool-header-left">
+        <div class="tool-num">4</div>
+        <div><div class="tool-name">Generador de Mensaje de Venta</div><div class="tool-desc-short">Mensaje listo para WhatsApp o email en segundos</div></div>
+      </div>
+      <div class="tool-toggle" id="toggle-t4"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="tool-body" id="body-t4">
+      <div class="msg-grid">
+        <div class="field-group"><label class="field-label">Nombre del cliente</label><input class="field-input" id="m-cliente" placeholder="Ej: Juan"></div>
+        <div class="field-group"><label class="field-label">Tu producto o servicio</label><input class="field-input" id="m-producto" placeholder="Ej: seguros de auto"></div>
+        <div class="field-group"><label class="field-label">Beneficio principal</label><input class="field-input" id="m-beneficio" placeholder="Ej: proteccion ante accidentes"></div>
+        <div class="field-group"><label class="field-label">Tipo de mensaje</label>
+          <select class="field-input" id="m-tipo">
+            <option value="inicial">Primer contacto</option>
+            <option value="seguimiento">Seguimiento</option>
+            <option value="oferta">Oferta especial</option>
+            <option value="cierre">Empuje de cierre</option>
+            <option value="reactivar">Reactivar cliente frio</option>
+            <option value="referido">Pedir referido</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-calc" onclick="generarMensaje()">Generar Mensaje</button>
+      <div class="msg-output" id="msg-output">
+        <div class="msg-text" id="msg-text"></div>
+        <button class="btn-copy" onclick="copiarMensaje()"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copiar mensaje</button>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="sec-prompts" class="hub-section">
+  <div class="section-title-row">
+    <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
+    <h2 class="section-heading">Prompts de Inteligencia Artificial</h2>
+  </div>
+  <p class="section-sub">Copia el prompt en ChatGPT o Claude. Reemplaza los [corchetes] con tu informacion y obtiene resultados en segundos.</p>
+  <div class="prompts-grid">
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="tool-num">1</div>
+        <div><div class="prompt-title-text">Redactar mensaje de venta por WhatsApp</div><div class="prompt-subtitle">Persuasivo, natural, listo para enviar</div></div>
+        <span class="prompt-tag">WhatsApp</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-vars"><div class="prompt-var">Cambia: <span>[PRODUCTO]</span></div><div class="prompt-var">Cambia: <span>[CLIENTE]</span></div><div class="prompt-var">Cambia: <span>[BENEFICIO]</span></div></div>
+        <textarea class="prompt-textarea" id="p1" readonly rows="7">Actua como un vendedor experto con 10 anios de experiencia. Escribe un mensaje de WhatsApp para vender [PRODUCTO] a [CLIENTE].
+
+El mensaje debe:
+- Empezar con su nombre de forma natural, sin Estimado
+- Mencionar el beneficio concreto: [BENEFICIO]
+- Tener maximo 5 lineas, tono conversacional y cercano
+- Terminar con una pregunta que invite a responder
+- Sin emojis exagerados, maximo 2
+
+Escribe solo el mensaje, nada mas.</textarea>
+        <div><button class="btn-copy" onclick="copiarTexto('p1')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copiar prompt</button></div>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="tool-num">2</div>
+        <div><div class="prompt-title-text">Responder una objecion dificil</div><div class="prompt-subtitle">Convierte el no en conversacion productiva</div></div>
+        <span class="prompt-tag">Objeciones</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-vars"><div class="prompt-var">Cambia: <span>[OBJECION]</span></div><div class="prompt-var">Cambia: <span>[PRODUCTO]</span></div></div>
+        <textarea class="prompt-textarea" id="p2" readonly rows="7">Eres un coach de ventas experto. Un cliente me dijo: [OBJECION]
+
+Estoy vendiendo [PRODUCTO]. Dame 3 formas diferentes de responder:
+
+1. Una respuesta empatica que valide su preocupacion
+2. Una respuesta con datos o logica que desmonte la objecion
+3. Una respuesta que reenfoque la conversacion hacia el valor
+
+Cada respuesta maximo 3 frases, natural y no agresiva.</textarea>
+        <div><button class="btn-copy" onclick="copiarTexto('p2')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copiar prompt</button></div>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="tool-num">3</div>
+        <div><div class="prompt-title-text">Investigar a un cliente antes de llamar</div><div class="prompt-subtitle">Llega preparado a cada conversacion</div></div>
+        <span class="prompt-tag">Preparacion</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-vars"><div class="prompt-var">Cambia: <span>[EMPRESA/CLIENTE]</span></div><div class="prompt-var">Cambia: <span>[SECTOR]</span></div><div class="prompt-var">Cambia: <span>[PRODUCTO]</span></div></div>
+        <textarea class="prompt-textarea" id="p3" readonly rows="8">Voy a llamar a [EMPRESA/CLIENTE] que trabaja en [SECTOR]. Voy a ofrecerles [PRODUCTO].
+
+Ayudame a prepararme. Dame:
+
+1. Los 3 problemas mas comunes que enfrenta este tipo de cliente
+2. Las 2 preguntas mas inteligentes que puedo hacer
+3. El argumento de valor mas relevante de mi producto para este perfil
+4. Una posible objecion que puede surgir y como responderla
+
+Se especifico y practico, no generico.</textarea>
+        <div><button class="btn-copy" onclick="copiarTexto('p3')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copiar prompt</button></div>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="tool-num">4</div>
+        <div><div class="prompt-title-text">Crear una propuesta comercial rapida</div><div class="prompt-subtitle">Propuesta profesional en minutos, no horas</div></div>
+        <span class="prompt-tag">Propuestas</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-vars"><div class="prompt-var">Cambia: <span>[CLIENTE]</span></div><div class="prompt-var">Cambia: <span>[PROBLEMA]</span></div><div class="prompt-var">Cambia: <span>[SOLUCION]</span></div><div class="prompt-var">Cambia: <span>[PRECIO]</span></div></div>
+        <textarea class="prompt-textarea" id="p4" readonly rows="10">Actua como un consultor de ventas experto. Escribe una propuesta comercial corta y persuasiva.
+
+Cliente: [CLIENTE]
+Problema que tiene: [PROBLEMA]
+Lo que yo ofrezco: [SOLUCION]
+Precio / inversion: [PRECIO]
+
+La propuesta debe tener:
+1. Una introduccion que demuestre que entiendo su problema
+2. Mi solucion explicada en terminos de beneficios (no caracteristicas)
+3. Por que yo y no otro proveedor
+4. El precio presentado como inversion, no como costo
+5. Un llamado a la accion claro
+
+Tono profesional pero cercano. Maximo 250 palabras.</textarea>
+        <div><button class="btn-copy" onclick="copiarTexto('p4')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copiar prompt</button></div>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="tool-num">5</div>
+        <div><div class="prompt-title-text">Generar argumentos de valor (ROI)</div><div class="prompt-subtitle">Justifica el precio con numeros concretos</div></div>
+        <span class="prompt-tag">Cierre</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-vars"><div class="prompt-var">Cambia: <span>[PRODUCTO]</span></div><div class="prompt-var">Cambia: <span>[PRECIO]</span></div><div class="prompt-var">Cambia: <span>[TIPO DE CLIENTE]</span></div></div>
+        <textarea class="prompt-textarea" id="p5" readonly rows="9">Eres un experto en ventas consultivas. Ayudame a construir el argumento de ROI para vender [PRODUCTO] a [TIPO DE CLIENTE] a un precio de [PRECIO].
+
+Dame:
+1. 3 formas concretas en que este producto genera dinero o ahorra tiempo al cliente
+2. Un calculo simple de retorno de inversion (cuando se paga solo)
+3. La frase de cierre ideal para presentar el precio sin que suene caro
+4. Una comparacion inteligente para que el precio se vea razonable
+
+Usa numeros especificos aunque sean estimados. El objetivo es que el cliente sienta que NO comprar es mas caro.</textarea>
+        <div><button class="btn-copy" onclick="copiarTexto('p5')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copiar prompt</button></div>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="prompt-card-header">
+        <div class="tool-num">6</div>
+        <div><div class="prompt-title-text">Reactivar un cliente que dejo de responder</div><div class="prompt-subtitle">El break-up message que genera respuestas</div></div>
+        <span class="prompt-tag">Seguimiento</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-vars"><div class="prompt-var">Cambia: <span>[CLIENTE]</span></div><div class="prompt-var">Cambia: <span>[PRODUCTO]</span></div><div class="prompt-var">Cambia: <span>[ULTIMO CONTACTO]</span></div></div>
+        <textarea class="prompt-textarea" id="p6" readonly rows="9">Actua como un vendedor experto en reactivacion de prospectos.
+
+Situacion: Contacte a [CLIENTE] hace [ULTIMO CONTACTO] para venderle [PRODUCTO]. Mostro interes al principio pero dejo de responder.
+
+Escribeme 2 opciones de mensaje:
+1. Un mensaje suave de reactivacion que aporte algo de valor antes de pedir respuesta
+2. El break-up message profesional: uno que diga que no volvere a contactarle, sin sonar resentido, que genere urgencia
+
+Ambos deben ser cortos (maximo 4 lineas), sin sonar desesperado ni agresivo.</textarea>
+        <div><button class="btn-copy" onclick="copiarTexto('p6')"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copiar prompt</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="sec-guias" class="hub-section">
+  <div class="section-title-row">
+    <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+    <h2 class="section-heading">Guias de Ventas</h2>
+  </div>
+  <p class="section-sub">Conocimiento practico destilado. Leelas aqui o imprimelas para tenerlas a mano.</p>
+  <div class="guia-card">
+    <div class="guia-header" onclick="toggleGuia('g1')">
+      <div class="guia-title"><span style="font-size:1.2rem">&#x26A0;</span> Los 10 Errores que Matan una Venta</div>
+      <div class="tool-toggle" id="toggle-g1"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="guia-body" id="body-g1">
+      <div class="guia-item"><div class="guia-num">1</div><div><div class="guia-item-title">Hablar mas de escuchar</div>El vendedor que monopoliza la conversacion pierde. El cliente quiere sentirse entendido, no bombardeado. Regla de oro: habla el 30%, escucha el 70%.</div></div><div class="guia-item"><div class="guia-num">2</div><div><div class="guia-item-title">No prepararse para la llamada o visita</div>Llegar sin saber nada del cliente transmite que no te importa su tiempo. 5 minutos de investigacion previa cambian completamente la conversacion.</div></div><div class="guia-item"><div class="guia-num">3</div><div><div class="guia-item-title">Vender caracteristicas, no beneficios</div>Tiene 8GB de RAM no vende. Tu computadora nunca mas se congela mientras trabajas si vende. Siempre traduce caracteristicas a beneficios concretos.</div></div><div class="guia-item"><div class="guia-num">4</div><div><div class="guia-item-title">No hacer seguimiento</div>El 80% de las ventas ocurren entre el 5to y 12vo contacto. La mayoria de vendedores se rinden en el 2do. El seguimiento sistematico es la mayor oportunidad perdida.</div></div><div class="guia-item"><div class="guia-num">5</div><div><div class="guia-item-title">Dar el precio antes de establecer valor</div>Si el cliente pregunta el precio antes de entender el valor, siempre parecera caro. Primero construye el valor, luego menciona la inversion.</div></div><div class="guia-item"><div class="guia-num">6</div><div><div class="guia-item-title">Tener miedo al no</div>El rechazo no es personal, es parte del proceso. Un vendedor que evita el no tampoco consigue el si. Cada no te acerca mas al siguiente si.</div></div><div class="guia-item"><div class="guia-num">7</div><div><div class="guia-item-title">No pedir el cierre explicitamente</div>Muchos vendedores esperan que el cliente diga lo compro solo. No pasa. Hay que pedirlo: Avanzamos con esto? o Te lo preparo para esta semana?</div></div><div class="guia-item"><div class="guia-num">8</div><div><div class="guia-item-title">Discutir con el cliente</div>Tener razon y perder la venta no tiene sentido. Ante una objecion valida primero: Entiendo tu punto, y precisamente por eso... Nunca digas esta equivocado.</div></div><div class="guia-item"><div class="guia-num">9</div><div><div class="guia-item-title">Prometer lo que no puedes cumplir</div>Una venta cerrada con promesa falsa genera un cliente furioso y cero referencias. La honestidad sobre limitaciones genera mas confianza que la promesa perfecta.</div></div><div class="guia-item"><div class="guia-num">10</div><div><div class="guia-item-title">Dejar de aprender</div>El mercado cambia, los clientes cambian, las tecnicas evolucionan. El vendedor que deja de aprender empieza a retroceder. 30 minutos de lectura al dia es suficiente.</div></div>
+      <button class="btn-print" onclick="window.print()">&#x1F5A8; Imprimir esta guia</button>
+    </div>
+  </div>
+  <div class="guia-card">
+    <div class="guia-header" onclick="toggleGuia('g2')">
+      <div class="guia-title"><span style="font-size:1.2rem">&#x1F4F2;</span> Como Hacer Seguimiento sin Ser Pesado</div>
+      <div class="tool-toggle" id="toggle-g2"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="guia-body" id="body-g2">
+      <div class="guia-item"><div class="guia-num">1</div><div><div class="guia-item-title">Siempre ten un motivo para contactar</div>No escribas solo queria saber si ya decidio. Siempre lleva algo: una informacion nueva, un dato relevante, una oferta limitada, o una pregunta genuina sobre su negocio.</div></div><div class="guia-item"><div class="guia-num">2</div><div><div class="guia-item-title">Define tiempos de seguimiento desde el inicio</div>Al terminar la primera reunion di: Te parece bien que te contacte el jueves? Asi el seguimiento es un compromiso acordado, no una intrusion.</div></div><div class="guia-item"><div class="guia-num">3</div><div><div class="guia-item-title">Varia el canal de contacto</div>1er seguimiento: WhatsApp. 2do: llamada. 3ro: email. 4to: WhatsApp con contenido de valor. Cambiar el canal evita que se sienta repetitivo.</div></div><div class="guia-item"><div class="guia-num">4</div><div><div class="guia-item-title">El break-up message es tu arma secreta</div>Despues de 4-5 intentos sin respuesta envia: Entiendo que quizas no es el momento. No te contactare mas, pero si necesitas mi servicio, aqui estare. Esto genera respuestas el 40% de las veces.</div></div><div class="guia-item"><div class="guia-num">5</div><div><div class="guia-item-title">Usa el seguimiento para educar, no solo para vender</div>Envia un tip util, un dato del sector, o una forma de hacer algo mejor. El cliente que te ve como fuente de valor responde mas que al que solo le pides que compre.</div></div><div class="guia-item"><div class="guia-num">6</div><div><div class="guia-item-title">Registra todo, no confies en tu memoria</div>Anota la fecha de cada contacto, que se hablo, y cuando volver a llamar. La memoria es el peor CRM del mundo. Un cuaderno ya es mejor que nada.</div></div><div class="guia-item"><div class="guia-num">7</div><div><div class="guia-item-title">Respeta el ritmo del cliente</div>Si dijo en dos semanas decido, respeta esas dos semanas. Contactar antes muestra ansiedad y genera desconfianza. La paciencia tactica es parte del seguimiento profesional.</div></div>
+      <button class="btn-print" onclick="window.print()">&#x1F5A8; Imprimir esta guia</button>
+    </div>
+  </div>
+  <div class="guia-card">
+    <div class="guia-header" onclick="toggleGuia('g3')">
+      <div class="guia-title"><span style="font-size:1.2rem">&#x1F3AF;</span> Como Cerrar una Venta sin Presionar</div>
+      <div class="tool-toggle" id="toggle-g3"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="guia-body" id="body-g3">
+      <div class="guia-item"><div class="guia-num">1</div><div><div class="guia-item-title">El cierre empieza desde el primer contacto</div>No es un momento al final, es un proceso. Desde el inicio debes crear confianza, entender el problema real y posicionar tu solucion como la obvia. Si hiciste bien los pasos anteriores, el cierre es natural.</div></div><div class="guia-item"><div class="guia-num">2</div><div><div class="guia-item-title">Detecta las seniales de compra</div>El cliente esta listo cuando: hace preguntas sobre detalles de entrega, pide referencias, habla en futuro (cuando lo tenga...), o pregunta por formas de pago. Son seniales: cierra ahi.</div></div><div class="guia-item"><div class="guia-num">3</div><div><div class="guia-item-title">Usa el cierre por alternativa</div>No preguntes lo compras, pregunta prefieres el pago en una cuota o en dos? o arrancamos esta semana o la proxima? Dar opciones elimina la presion del si/no.</div></div><div class="guia-item"><div class="guia-num">4</div><div><div class="guia-item-title">El silencio es tu aliado</div>Despues de presentar el precio o pedir el cierre, calla. El primero que habla cede. Muchos vendedores pierden ventas porque se ponen nerviosos con el silencio y empiezan a bajar el precio innecesariamente.</div></div><div class="guia-item"><div class="guia-num">5</div><div><div class="guia-item-title">Resume el valor antes de pedir la decision</div>Antes de cerrar haz un resumen rapido: Entonces lo que acordamos es que vas a obtener X, Y y Z, con lo que resuelves tu problema de A. La inversion es B. Avanzamos?</div></div><div class="guia-item"><div class="guia-num">6</div><div><div class="guia-item-title">Usa urgencia real, no inventada</div>Si hay una fecha limite, un stock limitado, o un precio que cambia, usalo. Pero la urgencia falsa destruye la confianza cuando el cliente se da cuenta. Solo usa lo que sea verdad.</div></div><div class="guia-item"><div class="guia-num">7</div><div><div class="guia-item-title">Si dice no, pregunta por que</div>Entiendo. Me puedes decir que es lo que te hace dudar? Muchas veces el no es una objecion disfrazada que aun puedes resolver. Si es un no definitivo, agradece y pide una referencia.</div></div>
+      <button class="btn-print" onclick="window.print()">&#x1F5A8; Imprimir esta guia</button>
+    </div>
+  </div>
+  <div class="guia-card">
+    <div class="guia-header" onclick="toggleGuia('g4')">
+      <div class="guia-title"><span style="font-size:1.2rem">&#x1F9E0;</span> Psicologia del Comprador: Por Que la Gente Compra</div>
+      <div class="tool-toggle" id="toggle-g4"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="guia-body" id="body-g4">
+      <div class="guia-item"><div class="guia-num">1</div><div><div class="guia-item-title">La gente compra con emocion, justifica con logica</div>Ninguna decision de compra es 100% racional. Primero sienten que quieren algo, luego buscan razones para justificarlo. Tu trabajo es generar la emocion correcta y luego darles los argumentos logicos.</div></div><div class="guia-item"><div class="guia-num">2</div><div><div class="guia-item-title">El dolor vende mas que el placer</div>Las personas se mueven mas para evitar perder algo que para ganar algo nuevo. Enfoca tu mensaje en el costo de NO comprar: Cada semana sin esto te cuesta X horas o X dinero.</div></div><div class="guia-item"><div class="guia-num">3</div><div><div class="guia-item-title">La prueba social es poderosa</div>Otros como tu ya lo estan usando es uno de los argumentos mas fuertes. Un testimonio real de un cliente similar vale mas que cualquier argumento tecnico.</div></div><div class="guia-item"><div class="guia-num">4</div><div><div class="guia-item-title">La reciprocidad funciona</div>Cuando das algo primero (un tip util, informacion valiosa, tiempo genuino), el cliente siente una deuda emocional. Los vendedores que educan antes de vender cierran mas que los que solo piden.</div></div><div class="guia-item"><div class="guia-num">5</div><div><div class="guia-item-title">La escasez y urgencia aceleran decisiones</div>El cerebro humano responde al miedo de perder una oportunidad. Stock limitado, precio por tiempo limitado, o cupos disponibles crean urgencia real. La escasez falsa se percibe y destruye la confianza.</div></div><div class="guia-item"><div class="guia-num">6</div><div><div class="guia-item-title">La confianza es el prerequisito de todo</div>Nadie compra sin confiar. La confianza se construye con consistencia, honestidad y presencia. Un vendedor que aparece solo cuando quiere vender nunca genera la confianza que genera uno que esta presente cuando el cliente lo necesita.</div></div><div class="guia-item"><div class="guia-num">7</div><div><div class="guia-item-title">El efecto ancla en los precios</div>El primer numero que el cliente escucha se convierte en referencia. Si primero muestras la opcion mas cara, el precio medio parecera razonable. Elige con intencion cuando y como presentas los precios.</div></div>
+      <button class="btn-print" onclick="window.print()">&#x1F5A8; Imprimir esta guia</button>
+    </div>
+  </div>
+</section>
+<section id="sec-excels" class="hub-section">
+  <div class="section-title-row">
+    <div class="section-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg></div>
+    <h2 class="section-heading">Plantillas Excel</h2>
+  </div>
+  <p class="section-sub">Archivos listos para usar. Abre el link, descarga una copia y empieza hoy mismo.</p>
+  <div class="excel-grid">
+    <div class="excel-card">
+      <div class="excel-icon">&#x1F4CA;</div>
+      <div class="excel-name">Pipeline de Ventas</div>
+      <div class="excel-desc">Registra todos tus prospectos activos, en que etapa estan y que debes hacer con cada uno.</div>
+      <div class="excel-features"><div class="excel-feat">Etapas: Contacto → Propuesta → Negociacion → Cierre</div><div class="excel-feat">Monto estimado y probabilidad de cierre</div><div class="excel-feat">Valor ponderado calculado automaticamente</div><div class="excel-feat">Resumen: pipeline total vs meta del mes</div></div>
+      <a class="btn-excel" href="https://docs.google.com/spreadsheets/d/1kHe_9zndzGGWipYnUf5jnZ9oWxAV2dyu/edit?usp=sharing" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Abrir y Descargar
+      </a>
+    </div>
+    <div class="excel-card">
+      <div class="excel-icon">&#x1F3AF;</div>
+      <div class="excel-name">Meta vs Realidad del Mes</div>
+      <div class="excel-desc">Compara tu meta de ventas contra lo que realmente estas cerrando, semana a semana.</div>
+      <div class="excel-features"><div class="excel-feat">Meta mensual dividida en 4 semanas automaticamente</div><div class="excel-feat">Solo llenas las ventas reales cada semana</div><div class="excel-feat">Diagnostico automatico: Meta cumplida / Cerca / Alerta</div><div class="excel-feat">Proyeccion de como vas a terminar el mes</div></div>
+      <a class="btn-excel" href="https://docs.google.com/spreadsheets/d/1IN7YfcNRwBVJZoGss-k4jTki-fSPRTNq/edit?usp=sharing" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Abrir y Descargar
+      </a>
+    </div>
+    <div class="excel-card">
+      <div class="excel-icon">&#x1F4B0;</div>
+      <div class="excel-name">Control de Comisiones</div>
+      <div class="excel-desc">Calcula exactamente cuanto has ganado en comisiones y cuanto te deben.</div>
+      <div class="excel-features"><div class="excel-feat">Configuras tu % una vez, se aplica a todo</div><div class="excel-feat">Comision calculada automaticamente por venta</div><div class="excel-feat">Separa pagadas vs pendientes de cobro</div><div class="excel-feat">Historial mensual del anio completo</div></div>
+      <a class="btn-excel" href="https://docs.google.com/spreadsheets/d/1yatwlj1sg9QYrlbMMPopYx9qLb7APjkk/edit?usp=sharing" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Abrir y Descargar
+      </a>
+    </div>
+  </div>
+  <div style="margin-top:28px;padding:20px 24px;background:var(--gold-dim2);border:1px solid rgba(245,166,35,0.15);border-radius:12px;">
+    <p style="font-size:0.85rem;color:var(--text-light);line-height:1.7;">
+      <strong style="color:var(--gold);">Como descargo el Excel?</strong><br>
+      Haz clic en "Abrir y Descargar" &rarr; se abre en Google Sheets &rarr; ve al menu <strong>Archivo &rarr; Descargar &rarr; Microsoft Excel (.xlsx)</strong> &rarr; listo, ya lo tienes en tu computadora.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer class="hub-footer">
+  <div class="footer-text">&copy; 2025 <span class="footer-gold">Merkaba Consulting Group</span> &middot; Estrategia &middot; Tecnologia &middot; Resultados</div>
+  <div class="footer-text">
+    <a href="https://wa.link/dx5gas" target="_blank" style="color:var(--gold);text-decoration:none;">WhatsApp</a>
+    &nbsp;&middot;&nbsp;
+    <a href="https://www.facebook.com/share/18Baob1564/" target="_blank" style="color:var(--gold);text-decoration:none;">Facebook</a>
+  </div>
+</footer>
+
+<div class="copy-toast" id="toast">&#x2713; Copiado al portapapeles</div>
+<script>
+function showSection(id,btn){
+  document.querySelectorAll('.hub-section').forEach(function(s){s.classList.remove('active');});
+  document.querySelectorAll('.nav-tab').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('sec-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function toggleTool(id){
+  var body=document.getElementById('body-'+id);
+  var tog=document.getElementById('toggle-'+id);
+  var isOpen=body.style.display==='block';
+  body.style.display=isOpen?'none':'block';
+  tog.classList.toggle('open',!isOpen);
+}
+
+function toggleGuia(id){
+  var body=document.getElementById('body-'+id);
+  var tog=document.getElementById('toggle-'+id);
+  var isOpen=body.style.display==='block';
+  body.style.display=isOpen?'none':'block';
+  tog.classList.toggle('open',!isOpen);
+}
+
+function calcDescuento(){
+  var precio=parseFloat(document.getElementById('c1-precio').value)||0;
+  var costo=parseFloat(document.getElementById('c1-costo').value)||0;
+  var desc=parseFloat(document.getElementById('c1-descuento').value)||0;
+  var box=document.getElementById('c1-result');
+  if(!precio||!costo){box.classList.add('hidden');return;}
+  var pd=precio*(1-desc/100);
+  var gan=pd-costo;
+  var mar=((gan/pd)*100).toFixed(1);
+  var dm=(((precio-costo*1.1)/precio)*100).toFixed(1);
+  document.getElementById('c1-r1').textContent='Bs. '+pd.toFixed(2);
+  document.getElementById('c1-r2').textContent='Bs. '+gan.toFixed(2);
+  document.getElementById('c1-r3').textContent=mar+'%';
+  document.getElementById('c1-r4').textContent=dm>0?dm+'%':'No puedes bajar mas';
+  var al=document.getElementById('c1-alert');
+  if(gan<0){al.className='result-alert danger';al.textContent='Advertencia: Con este descuento estas vendiendo a PERDIDA. No lo hagas.';}
+  else if(parseFloat(mar)<10){al.className='result-alert danger';al.textContent='Advertencia: Margen muy bajo ('+mar+'%). Considera reducir el descuento.';}
+  else{al.className='result-alert ok';al.textContent='Margen aceptable. Puedes ofrecer este descuento.';}
+  box.classList.remove('hidden');
+}
+
+var OBJ={
+  precio:{t:'Objecion: "Esta muy caro"',r:['Entiendo perfectamente. Me permite preguntarle: caro comparado con que? Porque dependiendo de lo que incluye, quizas estamos hablando de cosas distintas.','El precio cubre nuestra solucion. Si dividimos la inversion en los meses de uso, estamos hablando de menos de lo que cuesta una hora de su tiempo. Le parece razonable visto asi?','Muchos de mis clientes pensaban lo mismo antes de probarlo. Hoy me dicen que el costo real fue no haberlo tenido antes. Que es lo que mas le preocupa del precio?']},
+  pensar:{t:'Objecion: "Lo voy a pensar"',r:['Por supuesto, es una decision importante. Me puede decir que es especificamente lo que le genera duda? Asi le puedo dar la informacion exacta que necesita para decidir.','Perfecto. Para ayudarle a pensar con claridad: hay algo del producto o las condiciones que no quedo claro en nuestra conversacion?','Lo entiendo totalmente. Que le parece si agendamos una llamada corta en 2 dias para resolver cualquier duda que le surja mientras lo evalua?']},
+  proveedor:{t:'Objecion: "Ya tengo proveedor"',r:['Que bueno que ya tiene a alguien. No vine a reemplazar a nadie, sino a mostrarle algo que quizas su proveedor actual no le esta ofreciendo. Tiene 5 minutos para que se lo muestre?','Eso es una muy buena senal, significa que ya invierte en esto. Que es lo que mas valora de su proveedor actual? Quiero entender si puedo complementarle.','Perfecto. La mayoria de mis mejores clientes tenian proveedor cuando nos conocimos. Estaria abierto a una comparacion rapida solo para tener el panorama completo?']},
+  momento:{t:'Objecion: "No es el momento"',r:['Entiendo que el timing importa. Cuando cree que seria el momento ideal? Me anoto en el calendario para contactarle en esa fecha exacta.','La mayoria de mis clientes me dijeron eso y luego me contaron que esperaron demasiado. Que tendria que pasar para que el momento sea el correcto?','Totalmente valido. Solo para entenderle mejor: es un tema de presupuesto, de tiempo, o de otra prioridad que tiene ahora mismo?']},
+  consultar:{t:'Objecion: "Debo consultarlo"',r:['Por supuesto. Con quien lo va a consultar? Me gustaria poder preparar un resumen ejecutivo para esa persona con los puntos mas importantes.','Perfecto. Para facilitar esa conversacion, le puedo enviar un resumen de una pagina con la informacion clave para que lo comparta?','Claro. Que informacion cree que necesitaria esa persona para poder decir que si? Asi me aseguro de darsela toda desde ahora.']},
+  noconozco:{t:'Objecion: "No te conozco / no confio"',r:['Es completamente razonable. La confianza se gana, no se pide. Por eso no le voy a pedir que compre hoy, solo que me de la oportunidad de mostrarle como trabajo. Podemos empezar con algo pequenio?','Totalmente valido. Le parece si le comparto el testimonio de un cliente similar? Ellos pensaron lo mismo al principio y hoy son mis clientes mas fieles.','Lo entiendo. Que necesitaria ver o escuchar para empezar a confiar? Digame que le da tranquilidad y yo me aseguro de mostrarselo.']},
+  nolouso:{t:'Objecion: "No lo necesito"',r:['Interesante. Me puede contar como esta resolviendo hoy ese problema? Quiero entender si realmente no aplica o si hay una forma en que puedo agregar valor.','Puede ser que tenga razon. Pero muchos de mis clientes pensaban lo mismo hasta que calcularon cuanto tiempo o dinero perdian sin tenerlo. Le hago ese calculo rapido?','Respeto eso. Podria hacerle solo una pregunta? Si tuviera el beneficio principal disponible, lo usaria? Porque si la respuesta es si, entonces si lo necesita.']},
+  mabarato:{t:'Objecion: "Lo encontre mas barato"',r:['Me alegra que este comparando, eso es inteligente. Me permite preguntarle que incluye exactamente esa opcion? Porque muchas veces la diferencia de precio viene de una diferencia en lo que recibes.','El precio mas bajo casi siempre significa algo que no esta incluido. Cual es la diferencia concreta que encontraste? Asi puedo decirle si estamos comparando lo mismo.','Entiendo. Si la unica diferencia fuera el precio y todo lo demas fuera igual, claramente elegiria la opcion mas barata. Quiere que revisemos juntos que incluye cada opcion?']},
+  noresultados:{t:'Objecion: "Como se que funciona?"',r:['Excelente pregunta, es la correcta. Le puedo mostrar resultados concretos de clientes que lograron resultados especificos. Le gustaria hablar con ellos directamente?','Es justo que lo pida. Tengo clientes que usan esto actualmente. Que tipo de resultado necesitaria ver para convencerse? Se lo busco especificamente.','La mejor respuesta que puedo darle no son mis palabras, son los numeros. Le parece si hacemos una prueba pequenha primero para que lo vea con sus propios resultados?']},
+  ocupado:{t:'Objecion: "Ahora estoy muy ocupado"',r:['Lo entiendo perfectamente. Por eso mismo vine, precisamente lo que ofrezco ayuda a gente ocupada como usted a recuperar tiempo. Me da literalmente 3 minutos para mostrarle como?','Respeto su tiempo. Cuando seria el mejor momento? Dame una fecha y me adapto a su agenda, aunque sea a las 7am o por WhatsApp en el camino.','Totalmente valido. Le propongo algo: si en 5 minutos no ve como esto le puede ahorrar al menos 1 hora a la semana, dejo de molestarle. Trato?']},
+  malo:{t:'Objecion: "Escuche cosas malas"',r:['Gracias por decirmelo directamente. Me puede contar que fue lo que escucho? Quiero entender si es algo que realmente paso, como se resolvio, y si aplica a su situacion.','Lo tomo en serio. Ninguna empresa es perfecta y es posible que hayamos fallado en algun caso. Le parece si le muestro como manejamos esa situacion y que cambiamos?','Aprecio su honestidad. De quien lo escucho, si me permite preguntar? A veces los comentarios vienen de situaciones muy especificas que no reflejan la experiencia general.']},
+  descuento:{t:'Objecion: "Me das un descuento?"',r:['Me lo preguntan seguido y lo entiendo. Antes de hablar de precio: cual es su principal preocupacion, el precio en si o el valor que obtiene? Porque si es lo segundo, trabajemos eso primero.','No tengo margen para bajar el precio sin quitarle algo. Pero lo que si puedo hacer es agregar un servicio extra, extender el plazo, o incluir algo adicional. Eso le funciona?','El precio que le doy ya refleja el maximo valor que puedo ofrecer. Lo que si puedo es ayudarle a sentirse 100% seguro de que vale cada centavo. Que necesita ver para estar seguro?']}
+};
+
+function showObjeciones(tipo,btn){
+  document.querySelectorAll('.obj-btn').forEach(function(b){b.classList.remove('selected');});
+  btn.classList.add('selected');
+  var data=OBJ[tipo];
+  document.getElementById('resp-title').textContent=data.t;
+  var container=document.getElementById('resp-items');
+  container.innerHTML='';
+  data.r.forEach(function(r,i){
+    var d=document.createElement('div');
+    d.className='resp-item';
+    d.innerHTML='<strong style="color:var(--gold);font-size:0.75rem;">Opcion '+(i+1)+'</strong><br>'+r+'<span class="copy-hint">Copiar</span>';
+    d.onclick=function(){copyText(r);};
+    container.appendChild(d);
+  });
+  document.getElementById('respuestas-box').classList.remove('hidden');
+}
+
+var clientes=[];
+function agregarCliente(){
+  var n=document.getElementById('seg-nombre').value.trim();
+  var a=document.getElementById('seg-accion').value.trim();
+  var e=document.getElementById('seg-estado').value;
+  if(!n)return;
+  clientes.push({n:n,a:a,e:e,id:Date.now()});
+  document.getElementById('seg-nombre').value='';
+  document.getElementById('seg-accion').value='';
+  renderClientes();
+}
+function renderClientes(){
+  var lista=document.getElementById('clientes-lista');
+  if(clientes.length===0){lista.innerHTML='<div class="seg-empty">Agrega tus clientes del dia aqui</div>';actualizarStats();return;}
+  lista.innerHTML='';
+  clientes.forEach(function(c){
+    var d=document.createElement('div');
+    d.className='cliente-item'+(c.e==='llamado'?' llamado':'');
+    var dc=c.e==='urgente'?'dot-urgente':c.e==='llamado'?'dot-llamado':'dot-pendiente';
+    d.innerHTML='<div class="estado-dot '+dc+'"></div><div class="cliente-nombre">'+c.n+'</div><div class="cliente-accion">'+(c.a||'')+'</div><div class="cliente-btns">'+(c.e!=='llamado'?'<button class="btn-small btn-done" onclick="marcarLlamado('+c.id+')">Listo</button>':'')+'<button class="btn-small btn-del" onclick="eliminarCliente('+c.id+')">X</button></div>';
+    lista.appendChild(d);
+  });
+  actualizarStats();
+}
+function marcarLlamado(id){var c=clientes.find(function(x){return x.id===id;});if(c)c.e='llamado';renderClientes();}
+function eliminarCliente(id){clientes=clientes.filter(function(x){return x.id!==id;});renderClientes();}
+function actualizarStats(){
+  document.getElementById('s-total').textContent=clientes.length;
+  document.getElementById('s-pend').textContent=clientes.filter(function(c){return c.e==='pendiente';}).length;
+  document.getElementById('s-ok').textContent=clientes.filter(function(c){return c.e==='llamado';}).length;
+  document.getElementById('s-urg').textContent=clientes.filter(function(c){return c.e==='urgente';}).length;
+}
+
+var MSGS={
+  inicial:function(c,p,b){return'Hola '+c+', buen dia\n\nTe contacto porque creo que '+p+' puede ser justo lo que necesitas.\n\nLo que mas valoran mis clientes es '+b+'.\n\nTienes 5 minutos esta semana para contarte mas?';},
+  seguimiento:function(c,p,b){return'Hola '+c+', te escribo de seguimiento sobre '+p+'.\n\nQueria recordarte que '+b+' eso es lo que mis clientes siempre destacan.\n\nPudiste pensar en lo que conversamos? Tienes alguna duda que pueda resolver?';},
+  oferta:function(c,p,b){return c+', tengo buenas noticias!\n\nEstamos con una oferta especial en '+p+' por tiempo limitado.\n\nRecuerda que incluye '+b+'.\n\nTe cuento los detalles? Esta semana es el momento indicado.';},
+  cierre:function(c,p,b){return c+', quiero ser directo contigo.\n\nSe que '+p+' es justo lo que buscas y que '+b+' es importante para ti.\n\nSolo necesito tu confirmacion para arrancar. Avanzamos?';},
+  reactivar:function(c,p,b){return c+', hace tiempo que no hablamos.\n\nSe que estabas evaluando '+p+'. Hoy te escribo porque '+b+' y no queria que te lo perdieras.\n\nSin presion. Sigue siendo algo que te interesa?';},
+  referido:function(c,p,b){return c+', antes que nada gracias por confiar en '+p+'.\n\nMe alegra que '+b+' haya funcionado para ti.\n\nTe pregunto directamente: conoces a alguien que este buscando algo similar? Solo con que me des un nombre, yo me encargo del resto.';}
+};
+function generarMensaje(){
+  var c=document.getElementById('m-cliente').value.trim()||'Cliente';
+  var p=document.getElementById('m-producto').value.trim()||'el producto';
+  var b=document.getElementById('m-beneficio').value.trim()||'el beneficio';
+  var tipo=document.getElementById('m-tipo').value;
+  document.getElementById('msg-text').textContent=MSGS[tipo](c,p,b);
+  document.getElementById('msg-output').style.display='block';
+}
+function copiarMensaje(){copyText(document.getElementById('msg-text').textContent);}
+function copiarTexto(id){copyText(document.getElementById(id).value);}
+
+function copyText(txt){
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(txt).then(showToast).catch(function(){fallbackCopy(txt);});
+  }else{fallbackCopy(txt);}
+}
+function fallbackCopy(txt){
+  try{
+    var ta=document.createElement('textarea');
+    ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';ta.style.top='0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast();
+  }catch(e){showToast();}
+}
+function showToast(){
+  var t=document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},2000);
+}
+
+// Abrir primera herramienta por defecto
+document.getElementById('body-t1').style.display='block';
+document.getElementById('toggle-t1').classList.add('open');
+</script>
+</body>
+</html>
