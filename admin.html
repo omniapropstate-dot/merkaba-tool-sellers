@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel de Accesos — Merkaba</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1B2A6B;--navy-deep:#0f1a42;--gold:#F5A623;--gold-light:#f7b94a;--gold-dim:rgba(245,166,35,0.15);--white:#FFFFFF;--text-light:rgba(255,255,255,0.7);--text-lighter:rgba(255,255,255,0.4);--card-bg:rgba(255,255,255,0.04);--card-border:rgba(255,255,255,0.08);--green:#5eca88;--red:#ff7070;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy-deep);color:var(--white);min-height:100vh;padding:24px;}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:50px 50px;z-index:0;pointer-events:none;}
+.wrap{position:relative;z-index:2;max-width:1000px;margin:0 auto;}
+.head{text-align:center;margin-bottom:8px;}
+.brand-sub{font-size:0.55rem;font-weight:300;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;}
+.title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;margin-top:6px;}
+.title em{font-style:italic;color:var(--gold);}
+.sub{text-align:center;color:var(--text-light);font-size:0.88rem;margin-bottom:32px;}
+#lock{max-width:380px;margin:60px auto;background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:36px 32px;text-align:center;backdrop-filter:blur(20px);}
+#panel{display:none;}
+.field-label{display:block;font-size:0.7rem;color:var(--text-lighter);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;text-align:left;}
+.field-input{width:100%;background:rgba(255,255,255,0.06);border:1px solid var(--card-border);border-radius:9px;padding:11px 14px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none;transition:border-color 0.2s;}
+.field-input:focus{border-color:rgba(245,166,35,0.5);}
+.field-input::placeholder{color:var(--text-lighter);}
+.btn{background:var(--gold);color:var(--navy-deep);border:none;padding:13px 22px;border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;cursor:pointer;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.05em;}
+.btn:hover{background:var(--gold-light);}
+.btn:disabled{opacity:0.5;cursor:wait;}
+.btn-sm{padding:7px 12px;font-size:0.7rem;border-radius:7px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:all 0.2s;}
+.btn-toggle{background:rgba(255,255,255,0.08);color:var(--text-light);}
+.btn-toggle:hover{background:rgba(255,255,255,0.15);}
+.btn-edit{background:rgba(245,166,35,0.12);color:var(--gold);}
+.btn-edit:hover{background:rgba(245,166,35,0.25);}
+.btn-del{background:rgba(255,80,80,0.12);color:var(--red);}
+.btn-del:hover{background:rgba(255,80,80,0.25);}
+.btn-excel{background:rgba(94,202,136,0.15);color:var(--green);}
+.btn-excel:hover{background:rgba(94,202,136,0.28);}
+.card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:24px;margin-bottom:24px;}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:18px;color:var(--gold);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.gen-link{background:none;border:none;color:var(--gold);font-size:0.72rem;cursor:pointer;text-decoration:underline;margin-top:6px;padding:0;font-family:'DM Sans',sans-serif;}
+.tabla{width:100%;border-collapse:collapse;font-size:0.84rem;}
+.tabla th{text-align:left;padding:10px 12px;color:var(--text-lighter);text-transform:uppercase;font-size:0.66rem;letter-spacing:0.08em;border-bottom:1px solid var(--card-border);}
+.tabla td{padding:12px;border-bottom:1px solid rgba(255,255,255,0.05);vertical-align:middle;}
+.tabla tr:hover{background:rgba(255,255,255,0.02);}
+.clave-cell{font-family:monospace;color:var(--gold);font-size:0.8rem;}
+.estado{font-size:0.64rem;text-transform:uppercase;letter-spacing:0.06em;padding:3px 9px;border-radius:20px;font-weight:500;white-space:nowrap;}
+.estado.on{background:rgba(94,202,136,0.15);color:var(--green);}
+.estado.off{background:rgba(255,112,112,0.15);color:var(--red);}
+.acc-cell{display:flex;gap:6px;flex-wrap:wrap;}
+.msg{text-align:center;font-size:0.85rem;margin-top:14px;min-height:20px;}
+.msg.ok{color:var(--green);}
+.msg.error{color:var(--red);}
+.vacio{text-align:center;color:var(--text-lighter);font-size:0.88rem;padding:30px;}
+.tabla-wrap{overflow-x:auto;}
+.edit-banner{background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.3);border-radius:8px;padding:8px 14px;font-size:0.78rem;color:var(--gold);margin-bottom:14px;display:none;}
+@media(max-width:640px){.form-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="wrap">
+
+  <div id="lock">
+    <div class="brand-sub">Merkaba · Zona Privada</div>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.6rem;margin:14px 0 24px;">Panel de Accesos</h2>
+    <label class="field-label" for="maestra">Clave maestra</label>
+    <input class="field-input" id="maestra" type="password" placeholder="Tu clave de administrador" onkeydown="if(event.key==='Enter')desbloquear()">
+    <button class="btn" style="width:100%;margin-top:18px;" onclick="desbloquear()">Entrar al panel</button>
+    <div class="msg" id="lock-msg"></div>
+  </div>
+
+  <div id="panel">
+    <div class="head">
+      <div class="brand-sub">Merkaba Consulting Group</div>
+      <h1 class="title">Panel de <em>Accesos</em></h1>
+    </div>
+    <p class="sub">Aquí gestionas a tus clientes. Nadie más ve esta página.</p>
+
+    <div class="card">
+      <div class="card-title"><span id="form-titulo">Dar acceso a un cliente nuevo</span></div>
+      <div class="edit-banner" id="edit-banner"></div>
+      <div class="form-grid">
+        <div>
+          <label class="field-label">Nombre del vendedor</label>
+          <input class="field-input" id="f-nombre" placeholder="Ej: Carlos Mamani">
+        </div>
+        <div>
+          <label class="field-label">Teléfono</label>
+          <input class="field-input" id="f-telefono" placeholder="Ej: 70011223">
+        </div>
+        <div>
+          <label class="field-label">Gmail</label>
+          <input class="field-input" id="f-gmail" placeholder="Ej: carlos@gmail.com">
+        </div>
+        <div>
+          <label class="field-label">Área del vendedor</label>
+          <input class="field-input" id="f-area" placeholder="Ej: Seguros, Inmobiliaria...">
+        </div>
+        <div>
+          <label class="field-label">Contraseña de acceso</label>
+          <input class="field-input" id="f-clave" placeholder="Ej: carlos-2026">
+          <button class="gen-link" onclick="generarClave()">Generar una automática</button>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:8px;">
+          <button class="btn" id="btn-guardar" onclick="guardar()" style="flex:1;">Crear acceso</button>
+          <button class="btn-sm btn-toggle" id="btn-cancelar" onclick="cancelarEdicion()" style="display:none;">Cancelar</button>
+        </div>
+      </div>
+      <div class="msg" id="form-msg"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <span>Tus clientes (<span id="contador">0</span>)</span>
+        <div style="display:flex;gap:8px;">
+          <button class="btn-sm btn-excel" onclick="descargarExcel()">Descargar Excel</button>
+          <button class="btn-sm btn-toggle" onclick="cargarLista()">Actualizar</button>
+        </div>
+      </div>
+      <div class="tabla-wrap" id="lista"><div class="vacio">Cargando...</div></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let CLAVE_MAESTRA = '';
+let CLIENTES = [];
+let EDITANDO = null;
+
+async function desbloquear(){
+  const clave = document.getElementById('maestra').value.trim();
+  const msg = document.getElementById('lock-msg');
+  msg.className='msg';
+  if(!clave){ msg.className='msg error'; msg.textContent='Escribe tu clave maestra.'; return; }
+  const resp = await llamar('listar', { claveMaestra: clave });
+  if(resp.ok){
+    CLAVE_MAESTRA = clave;
+    document.getElementById('lock').style.display='none';
+    document.getElementById('panel').style.display='block';
+    pintarLista(resp.clientes||[]);
+  } else {
+    msg.className='msg error';
+    msg.textContent = resp.motivo || 'Clave incorrecta.';
+  }
+}
+
+async function llamar(accion, extra){
+  try {
+    const body = Object.assign({ accion, claveMaestra: CLAVE_MAESTRA || (extra&&extra.claveMaestra) || '' }, extra||{});
+    const r = await fetch('/.netlify/functions/admin', {
+      method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify(body)
+    });
+    return await r.json();
+  } catch(e){ return { ok:false, motivo:'Error de conexión.' }; }
+}
+
+function generarClave(){
+  const nombre = (document.getElementById('f-nombre').value.trim().toLowerCase().split(' ')[0]) || 'cliente';
+  const num = Math.floor(1000+Math.random()*9000);
+  document.getElementById('f-clave').value = nombre.replace(/[^a-z]/g,'') + '-' + num;
+}
+
+async function guardar(){
+  const nombre = document.getElementById('f-nombre').value.trim();
+  const telefono = document.getElementById('f-telefono').value.trim();
+  const gmail = document.getElementById('f-gmail').value.trim();
+  const area = document.getElementById('f-area').value.trim();
+  const clave = document.getElementById('f-clave').value.trim();
+  const msg = document.getElementById('form-msg');
+  const btn = document.getElementById('btn-guardar');
+  msg.className='msg';
+
+  if(!nombre || !clave){ msg.className='msg error'; msg.textContent='El nombre y la contraseña son obligatorios.'; return; }
+
+  btn.disabled=true; btn.textContent = EDITANDO ? 'Guardando...' : 'Creando...';
+  let resp;
+  if(EDITANDO){
+    resp = await llamar('editar', { clave: EDITANDO, nombre, telefono, gmail, area });
+  } else {
+    resp = await llamar('crear', { nombre, telefono, gmail, area, clave });
+  }
+  btn.disabled=false; btn.textContent = EDITANDO ? 'Guardar cambios' : 'Crear acceso';
+
+  if(resp.ok){
+    msg.className='msg ok';
+    msg.textContent = EDITANDO ? 'Datos actualizados.' : ('Acceso creado. Manda esta contraseña al cliente: ' + clave);
+    if(EDITANDO) cancelarEdicion();
+    limpiarForm();
+    cargarLista();
+  } else {
+    msg.className='msg error';
+    msg.textContent = resp.motivo || 'No se pudo guardar.';
+  }
+}
+
+function limpiarForm(){
+  document.getElementById('f-nombre').value='';
+  document.getElementById('f-telefono').value='';
+  document.getElementById('f-gmail').value='';
+  document.getElementById('f-area').value='';
+  document.getElementById('f-clave').value='';
+}
+
+function editar(clave){
+  const c = CLIENTES.find(x=>x.clave===clave);
+  if(!c) return;
+  EDITANDO = clave;
+  document.getElementById('f-nombre').value = c.nombre||'';
+  document.getElementById('f-telefono').value = c.telefono||'';
+  document.getElementById('f-gmail').value = c.gmail||'';
+  document.getElementById('f-area').value = c.area||'';
+  document.getElementById('f-clave').value = c.clave;
+  document.getElementById('f-clave').disabled = true;
+  document.getElementById('form-titulo').textContent = 'Editando cliente';
+  document.getElementById('btn-guardar').textContent = 'Guardar cambios';
+  document.getElementById('btn-cancelar').style.display = 'inline-block';
+  const banner = document.getElementById('edit-banner');
+  banner.style.display='block';
+  banner.textContent = 'Editando a ' + (c.nombre||'cliente') + '. La contraseña no se puede cambiar aquí.';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function cancelarEdicion(){
+  EDITANDO = null;
+  document.getElementById('f-clave').disabled = false;
+  document.getElementById('form-titulo').textContent = 'Dar acceso a un cliente nuevo';
+  document.getElementById('btn-guardar').textContent = 'Crear acceso';
+  document.getElementById('btn-cancelar').style.display = 'none';
+  document.getElementById('edit-banner').style.display = 'none';
+  limpiarForm();
+}
+
+async function cargarLista(){
+  const resp = await llamar('listar', {});
+  if(resp.ok) pintarLista(resp.clientes||[]);
+}
+
+function pintarLista(clientes){
+  CLIENTES = clientes;
+  document.getElementById('contador').textContent = clientes.length;
+  const cont = document.getElementById('lista');
+  if(!clientes.length){
+    cont.innerHTML = '<div class="vacio">Todavía no tienes clientes. Crea el primero arriba.</div>';
+    return;
+  }
+  let filas = clientes.map(c => `
+    <tr>
+      <td>${esc(c.nombre)}</td>
+      <td>${esc(c.telefono)||'—'}</td>
+      <td>${esc(c.gmail)||'—'}</td>
+      <td>${esc(c.area)||'—'}</td>
+      <td class="clave-cell">${esc(c.clave)}</td>
+      <td><span class="estado ${c.activo?'on':'off'}">${c.activo?'Activo':'Bloqueado'}</span></td>
+      <td><div class="acc-cell">
+        <button class="btn-sm btn-edit" onclick="editar('${esc(c.clave)}')">Editar</button>
+        <button class="btn-sm btn-toggle" onclick="cambiarEstado('${esc(c.clave)}')">${c.activo?'Bloquear':'Activar'}</button>
+        <button class="btn-sm btn-del" onclick="borrar('${esc(c.clave)}','${esc(c.nombre)}')">Eliminar</button>
+      </div></td>
+    </tr>`).join('');
+  cont.innerHTML = `
+    <table class="tabla">
+      <thead><tr>
+        <th>Nombre</th><th>Teléfono</th><th>Gmail</th><th>Área</th><th>Contraseña</th><th>Estado</th><th>Acciones</th>
+      </tr></thead>
+      <tbody>${filas}</tbody>
+    </table>`;
+}
+
+async function cambiarEstado(clave){
+  const resp = await llamar('cambiarEstado', { clave });
+  if(resp.ok) cargarLista();
+}
+
+async function borrar(clave, nombre){
+  if(!confirm('¿Eliminar a ' + nombre + '? Ya no podrá entrar.')) return;
+  const resp = await llamar('borrar', { clave });
+  if(resp.ok) cargarLista();
+}
+
+function descargarExcel(){
+  if(!CLIENTES.length){ alert('No hay clientes para descargar.'); return; }
+  const enc = s => '"' + String(s||'').replace(/"/g,'""') + '"';
+  let csv = 'Nombre,Telefono,Gmail,Area,Contrasena,Estado,Fecha de registro\n';
+  CLIENTES.forEach(c => {
+    const fecha = c.creado ? new Date(c.creado).toLocaleDateString('es-BO') : '';
+    csv += [enc(c.nombre),enc(c.telefono),enc(c.gmail),enc(c.area),enc(c.clave),enc(c.activo?'Activo':'Bloqueado'),enc(fecha)].join(',') + '\n';
+  });
+  const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'clientes-merkaba-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function esc(s){
+  return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+</script>
+</body>
+</html>
