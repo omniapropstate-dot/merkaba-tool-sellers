@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kit del Vendedor — Acceso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1B2A6B;--navy-deep:#0f1a42;--gold:#F5A623;--gold-light:#f7b94a;--gold-dim:rgba(245,166,35,0.15);--white:#FFFFFF;--text-light:rgba(255,255,255,0.7);--text-lighter:rgba(255,255,255,0.4);--card-bg:rgba(255,255,255,0.04);--card-border:rgba(255,255,255,0.08);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy-deep);color:var(--white);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;overflow:hidden;}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:50px 50px;z-index:0;}
+.bg-glow{position:fixed;inset:0;background:radial-gradient(ellipse 50% 50% at 50% 40%,rgba(36,53,128,0.5) 0%,transparent 70%);z-index:0;}
+.login-card{position:relative;z-index:2;background:linear-gradient(160deg,rgba(27,42,107,0.4) 0%,rgba(15,26,66,0.6) 100%);border:1px solid var(--card-border);border-radius:18px;padding:48px 40px;max-width:420px;width:100%;backdrop-filter:blur(20px);box-shadow:0 30px 80px rgba(0,0,0,0.4);animation:rise 0.6s ease;}
+@keyframes rise{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.brand{text-align:center;margin-bottom:8px;}
+.brand-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;letter-spacing:0.05em;}
+.brand-sub{font-size:0.55rem;font-weight:300;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;margin-top:4px;}
+.eyebrow{display:flex;align-items:center;justify-content:center;gap:10px;font-size:0.68rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin:32px 0 14px;}
+.eyebrow::before,.eyebrow::after{content:'';display:block;width:24px;height:1px;background:rgba(245,166,35,0.5);}
+.title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;text-align:center;line-height:1.2;margin-bottom:8px;}
+.title em{font-style:italic;color:var(--gold);}
+.subtitle{text-align:center;color:var(--text-light);font-size:0.88rem;line-height:1.6;margin-bottom:32px;}
+.field-label{display:block;font-size:0.72rem;color:var(--text-lighter);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:8px;}
+.field-input{width:100%;background:rgba(255,255,255,0.06);border:1px solid var(--card-border);border-radius:10px;padding:15px 18px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:1.05rem;outline:none;transition:border-color 0.2s;text-align:center;letter-spacing:0.05em;}
+.field-input:focus{border-color:rgba(245,166,35,0.5);}
+.field-input::placeholder{color:var(--text-lighter);letter-spacing:normal;}
+.btn{width:100%;background:var(--gold);color:var(--navy-deep);border:none;padding:16px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.08em;margin-top:20px;}
+.btn:hover{background:var(--gold-light);transform:translateY(-1px);}
+.btn:disabled{opacity:0.5;cursor:wait;transform:none;}
+.msg{text-align:center;font-size:0.85rem;margin-top:18px;min-height:20px;line-height:1.5;}
+.msg.error{color:#ff8080;}
+.foot{text-align:center;font-size:0.72rem;color:var(--text-lighter);margin-top:28px;line-height:1.6;}
+.foot a{color:var(--gold);text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<div class="login-card">
+  <div class="brand">
+    <div class="brand-name">Merkaba Consulting Group</div>
+    <div class="brand-sub">Herramientas Profesionales</div>
+  </div>
+
+  <div class="eyebrow">Acceso Privado</div>
+  <h1 class="title">Kit del <em>Vendedor</em></h1>
+  <p class="subtitle">Ingresa la contraseña que recibiste para acceder a tus herramientas.</p>
+
+  <label class="field-label" for="clave">Tu contraseña</label>
+  <input class="field-input" id="clave" type="password" placeholder="Escribe tu contraseña aquí" autocomplete="off" onkeydown="if(event.key==='Enter')entrar()">
+
+  <button class="btn" id="btn" onclick="entrar()">Entrar</button>
+
+  <div class="msg" id="msg"></div>
+
+  <div class="foot">
+    ¿No tienes acceso o tienes problemas?<br>
+    Escríbenos por WhatsApp y te ayudamos.
+  </div>
+</div>
+
+<script>
+async function entrar(){
+  const clave = document.getElementById('clave').value.trim();
+  const msg = document.getElementById('msg');
+  const btn = document.getElementById('btn');
+  msg.className = 'msg';
+  msg.textContent = '';
+
+  if(!clave){
+    msg.className = 'msg error';
+    msg.textContent = 'Escribe tu contraseña.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Verificando...';
+
+  try {
+    const resp = await fetch('/.netlify/functions/entrar', {
+      method: 'POST',
+      headers: {'content-type':'application/json'},
+      body: JSON.stringify({ clave })
+    });
+
+    const tipo = resp.headers.get('content-type') || '';
+    if (tipo.includes('text/html')) {
+      const html = await resp.text();
+      document.open();
+      document.write(html);
+      document.close();
+      return;
+    }
+
+    const data = await resp.json();
+    msg.className = 'msg error';
+    msg.textContent = data.motivo || 'No se pudo entrar.';
+  } catch (e) {
+    msg.className = 'msg error';
+    msg.textContent = 'Error de conexión. Revisa tu internet e intenta de nuevo.';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Entrar';
+  }
+}
+</script>
+</body>
+</html>
