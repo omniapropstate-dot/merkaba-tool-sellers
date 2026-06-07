@@ -35,10 +35,27 @@ export default async (request) => {
     }
     await libreta.setJSON(clave, {
       nombre,
+      telefono: (datos.telefono || "").trim(),
+      gmail: (datos.gmail || "").trim(),
+      area: (datos.area || "").trim(),
       activo: true,
       creado: new Date().toISOString(),
     });
     return json({ ok: true, mensaje: "Acceso creado para " + nombre });
+  }
+
+  if (accion === "editar") {
+    const clave = (datos.clave || "").trim();
+    const registro = await libreta.get(clave, { type: "json" });
+    if (!registro) {
+      return json({ ok: false, motivo: "No se encontró ese cliente" }, 200);
+    }
+    registro.nombre = (datos.nombre || registro.nombre || "").trim();
+    registro.telefono = (datos.telefono || "").trim();
+    registro.gmail = (datos.gmail || "").trim();
+    registro.area = (datos.area || "").trim();
+    await libreta.setJSON(clave, registro);
+    return json({ ok: true, mensaje: "Datos actualizados" });
   }
 
   if (accion === "cambiarEstado") {
@@ -66,9 +83,12 @@ export default async (request) => {
       if (reg) {
         lista.push({
           clave: b.key,
-          nombre: reg.nombre,
+          nombre: reg.nombre || "",
+          telefono: reg.telefono || "",
+          gmail: reg.gmail || "",
+          area: reg.area || "",
           activo: reg.activo,
-          creado: reg.creado,
+          creado: reg.creado || "",
         });
       }
     }
